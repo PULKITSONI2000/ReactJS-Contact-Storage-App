@@ -41,11 +41,13 @@ const Contacts = () => {
   return (
     <Container className="mt-4">
       {/* TODO: Loop through FIREBASE objects  */}
-      {Contacts.length === 0 && !isLoading ? (
-        <div className="center text-large text-primary">NO contact found</div>
+      {contacts.length === 0 && !isLoading ? (
+        <div className="Center text-large text-primary">
+          NO Contacts found in firebase
+        </div>
       ) : (
         <ListGroup>
-          {Object.entries(contacts).map((key, value) => (
+          {Object.entries(contacts).map(([key, value]) => (
             <ListGroupItem key={key}>
               <Contact contact={value} contactKey={key} />
             </ListGroupItem>
