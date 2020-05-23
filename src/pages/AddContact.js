@@ -20,7 +20,7 @@ import {
 import { readAndCompressImage } from "browser-image-resizer";
 
 // configs for image resizing
-//TODO: DONE: add image configurations
+//TODO: DONE add image configurations
 import { imageConfig } from "../utils/config";
 
 import { MdAddCircleOutline } from "react-icons/md";
@@ -76,20 +76,20 @@ const AddContact = () => {
     // TODO: upload image and set D-URL to state
 
     try {
-      const file = e.target.file[0]; // gives the entire path you wanted to upload
+      const file = e.target.files[0]; // gives the entire path you wanted to upload
 
-      let matadata = {
-        contactType: file.type, // gives the file type
+      var metadata = {
+        contentType: file.type, // gives the file type
       };
 
-      let resizerImage = await readAndCompressImage(file, imageConfig);
+      let resizedImage = await readAndCompressImage(file, imageConfig);
 
       const storageRef = await firebase.storage().ref();
-      let uploadTast = storageRef
+      var uploadTask = storageRef
         .child("images/" + file.name)
-        .put(resizerImage, matadata);
+        .put(resizedImage, metadata);
 
-      uploadTast.on(
+      uploadTask.on(
         firebase.storage.TaskEvent.STATE_CHANGED,
         (snapshot) => {
           setIsUploading(true);
@@ -99,23 +99,22 @@ const AddContact = () => {
           switch (snapshot.state) {
             case firebase.storage.TaskState.PAUSED:
               setIsUploading(false);
-              console.log("Uploading is paused");
+              console.log("UPloading is paused");
               break;
             case firebase.storage.TaskState.RUNNING:
-              console.log("Uploading is in progress...");
+              console.log("UPloading is in progress...");
               break;
           }
-
           if (progress == 100) {
             setIsUploading(false);
             toast("uploaded", { type: "success" });
           }
         },
         (error) => {
-          toast("Something went wrong in state change", { type: "error" });
+          toast("something is wrong in state change", { type: "error" });
         },
         () => {
-          uploadTast.snapshot.ref
+          uploadTask.snapshot.ref
             .getDownloadURL()
             .then((downloadURL) => {
               setDownloadUrl(downloadURL);
@@ -152,7 +151,6 @@ const AddContact = () => {
   // to handle update the contact when there is contact in state and the user had came from clicking the contact update icon
   const updateContact = async () => {
     //TODO: update contact method
-
     try {
       firebase
         .database()
@@ -167,14 +165,13 @@ const AddContact = () => {
         });
     } catch (error) {
       console.log(error);
-      toast("oppss..", { type: "error" });
+      toast("Oppss..", { type: "error" });
     }
   };
 
   // firing when the user click on submit button or the form has been submitted
   const handleSubmit = (e) => {
     e.preventDefault();
-
     isUpdate ? updateContact() : addContact();
 
     toast("Success", { type: "success" });
