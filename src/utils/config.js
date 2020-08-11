@@ -9,12 +9,12 @@ export const imageConfig = {
 };
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyCZfhRt5NJovddBk6vNDlmaZaaW4pbNR3s",
-  authDomain: "contact-web-app.firebaseapp.com",
-  databaseURL: "https://contact-web-app.firebaseio.com",
-  projectId: "contact-web-app",
-  storageBucket: "contact-web-app.appspot.com",
-  messagingSenderId: "1000104279229",
-  appId: "1:1000104279229:web:bd0c316d17553979e90bd4",
-  measurementId: "G-MFF8QBPT9Q",
+  apiKey: "Your Api Key",
+  authDomain: "Your Auth Domain",
+  databaseURL: "Your database url",
+  projectId: "Your project Id",
+  storageBucket: "Your Storage bucket url",
+  messagingSenderId: "Your messagingSenderId",
+  appId: "",
+  measurementId: "",
 };
